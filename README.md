@@ -54,5 +54,5 @@ to `myMethod()`.
 
 ## Suggestion
 
-Use [https://github.com/nusphere/laminas-router-attributes](nubox/laminas-router-attributes) for reduce configuration
+Use [nubox/laminas-router-attributes](https://github.com/nusphere/laminas-router-attributes) for reduce configuration
 overhead with symfony route attributes.
