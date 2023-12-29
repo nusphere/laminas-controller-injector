@@ -13,12 +13,14 @@
     "laminas/laminas-modulemanager": "*"
   },
   "require-dev": {
+    "nubox/laminas-router-attributes": "*",
     "laminas/laminas-coding-standard": "~2.5.0",
     "laminas/laminas-test": "^4.0",
     "symfony/expression-language": "^6.4 || ^7.0",
     "vimeo/psalm": "^5.18"
   },
   "suggest": {
+    "nubox/laminas-router-attributes": "allows symfony route configuration"
   },
   "config": {
     "allow-plugins": {
@@ -32,7 +34,8 @@
   },
   "autoload-dev": {
     "psr-4": {
-      "Laminas\\Mvc\\Injector\\Unit\\Test\\": "tests/unit"
+      "Laminas\\Mvc\\Injector\\Unit\\Test\\": "tests/unit",
+      "Laminas\\Mvc\\Injector\\Functional\\Test\\": "tests/functional"
     }
   },
   "scripts": {
