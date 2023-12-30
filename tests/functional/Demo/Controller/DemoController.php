@@ -64,4 +64,13 @@ final class DemoController extends AbstractInjectorController
 
         return $response;
     }
+
+    #[Route(path: 'no-typehint/{var}', name: 'typehint-route')]
+    public function noTypeHintParamter(Request $request, $var): Response
+    {
+        $response = new Response();
+        $response->setContent($request->getUri()->getPath() . ' - ' . $var);
+
+        return $response;
+    }
 }

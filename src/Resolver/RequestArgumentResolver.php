@@ -12,6 +12,10 @@ final class RequestArgumentResolver implements ArgumentResolverInterface
 {
     public function supports(ReflectionParameter $parameter): bool
     {
+        if (! $parameter->hasType()) {
+            return false;
+        }
+
         return $parameter->getType()->getName() === Request::class;
     }
 

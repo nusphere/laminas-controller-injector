@@ -11,6 +11,10 @@ final class StringArgumentResolver implements ArgumentResolverInterface
 {
     public function supports(ReflectionParameter $parameter): bool
     {
+        if (! $parameter->hasType()) {
+            return true;
+        }
+
         return $parameter->getType()->getName() === 'string';
     }
 

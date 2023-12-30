@@ -6,10 +6,10 @@ use Laminas\Mvc\Injector\Factory\ArgumentResolverListenerFactory;
 use Laminas\Mvc\Injector\Listener\ArgumentResolverListener;
 
 return [
-    'listeners'         => [
+    'listeners'       => [
         ArgumentResolverListener::class,
     ],
-    'service_manager'   => [
+    'service_manager' => [
         'factories' => [
             ArgumentResolverListener::class => ArgumentResolverListenerFactory::class,
         ],
