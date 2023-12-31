@@ -40,7 +40,7 @@ class AbstractInjectorController extends AbstractController
         $controllerEvent = new ControllerEvent();
         $controllerEvent->setName(ControllerEvent::EVENT_ARGUMENT_RESOLVE);
         $controllerEvent->setRouteMatch($routeMatch);
-        $controllerEvent->setRequest($this->request);
+        $controllerEvent->setRequest($this->getRequest());
         $controllerEvent->setTarget($this);
 
         $eventManager = $e->getApplication()->getEventManager();
