@@ -19,8 +19,10 @@ final class ArgumentResolverListener implements ListenerAggregateInterface
 {
     use ListenerAggregateTrait;
 
-    public function __construct(private ControllerManager $controllerManager)
-    {
+    public function __construct(
+        private ControllerManager $controllerManager,
+        private array $argumentResolver
+    ) {
     }
 
     private function onArgumentResolverEvent(ControllerEvent $event): Response
@@ -35,15 +37,17 @@ final class ArgumentResolverListener implements ListenerAggregateInterface
 
         $arguments = [];
         foreach ($method->getParameters() as $parameter) {
-            foreach ($event->getResolver() as $resolver) {
-                if ($resolver->supports($parameter)) {
+            foreach ($this->argumentResolver as $resolver) {
+                if ($resolver->supports($parameter, $event)) {
                     $arguments[$parameter->getPosition()] = $resolver->resolve($parameter, $event);
 
                     continue 2;
                 }
             }
 
-            throw new Exception('unable to solve argument ' . $parameter->getName() . ' ' . $parameter->getType()->getName());
+            throw new Exception(
+                'unable to solve argument ' . $parameter->getName() . ' ' . $parameter->getType()->getName()
+            );
         }
 
         return call_user_func([$controller, $action], ...$arguments);

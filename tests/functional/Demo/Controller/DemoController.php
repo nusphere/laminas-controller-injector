@@ -7,6 +7,7 @@ namespace Laminas\Mvc\Injector\Functional\Test\Demo\Controller;
 use Laminas\Http\Request;
 use Laminas\Http\Response;
 use Laminas\Mvc\Injector\Controller\AbstractInjectorController;
+use Laminas\View\View;
 use Symfony\Component\Routing\Attribute\Route;
 
 final class DemoController extends AbstractInjectorController
@@ -70,6 +71,15 @@ final class DemoController extends AbstractInjectorController
     {
         $response = new Response();
         $response->setContent($request->getUri()->getPath() . ' - ' . $var);
+
+        return $response;
+    }
+
+    #[Route(path: 'service-test', name: 'service-route')]
+    public function serviceParameter(View $view): Response
+    {
+        $response = new Response();
+        $response->setContent($view->getResponse());
 
         return $response;
     }

@@ -63,4 +63,11 @@ final class DemoInjectionTest extends AbstractControllerTestCase
 
         self::assertSame('/no-typehint/variable - variable', $this->getResponse()->getContent());
     }
+
+    public function testServiceDemo(): void
+    {
+        $this->dispatch('/service-test');
+
+        self::assertSame(null, $this->getResponse()->getContent());
+    }
 }

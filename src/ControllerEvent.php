@@ -9,6 +9,7 @@ use Laminas\Http\Request;
 use Laminas\Mvc\Exception\DomainException;
 use Laminas\Mvc\Injector\Resolver\IntegerArgumentResolver;
 use Laminas\Mvc\Injector\Resolver\RequestArgumentResolver;
+use Laminas\Mvc\Injector\Resolver\ServiceArgumentResolver;
 use Laminas\Mvc\Injector\Resolver\StringArgumentResolver;
 use Laminas\Router\RouteMatch;
 
@@ -39,9 +40,10 @@ final class ControllerEvent extends Event
     public function getResolver(): array
     {
         return [
-            new StringArgumentResolver(),
-            new IntegerArgumentResolver(),
-            new RequestArgumentResolver(),
+            StringArgumentResolver::class,
+            IntegerArgumentResolver::class,
+            RequestArgumentResolver::class,
+            ServiceArgumentResolver::class,
         ];
     }
 
