@@ -19,6 +19,19 @@ Use composer to install the package:
 
 `composer require nubox/laminas-controller-injector`
 
+## Activate Plugin in our Laminas Application
+
+```php
+return [
+    // Retrieve list of modules used in this application.
+    'modules' => [
+        ...,
+        Laminas\Mvc\Injector\Module::class, // or 'Laminas\Mvc\Injector'
+    ],
+    ...
+];
+```
+
 ## Usage
 
 Suppose you have a controller that looks like this:
