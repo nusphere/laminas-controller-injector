@@ -7,7 +7,7 @@ namespace Laminas\Mvc\Injector\Resolver;
 use Laminas\Mvc\Injector\ControllerEvent;
 use ReflectionParameter;
 
-final class StringArgumentResolver implements ArgumentResolverInterface
+final class StringArgumentResolver implements ArgumentResolverInterface, NonTypeArgumentResolverInterface
 {
     public function supports(ReflectionParameter $parameter): bool
     {

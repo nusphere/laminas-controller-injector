@@ -16,10 +16,6 @@ final class ServiceArgumentResolver implements ArgumentResolverInterface
 
     public function supports(ReflectionParameter $parameter): bool
     {
-        if (! $parameter->hasType()) {
-            return false;
-        }
-
         return $this->container->has($parameter->getType()->getName());
     }
 

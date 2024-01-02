@@ -106,6 +106,10 @@ return [
 ];
 ```
 
+Normally you need a corresponding type hint to determine the correct ArgumentResolver.
+In the event that no suitable type can be found, you can use the MarkUp interface `NonTypeArgumentResolverInterface` 
+for your own ArgumentResolver. this would then also be “queried” in such a case.
+
 ## Suggestion
 
 Use [nubox/laminas-router-attributes](https://github.com/nusphere/laminas-router-attributes) for reduce configuration

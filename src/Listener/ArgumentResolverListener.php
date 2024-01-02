@@ -11,8 +11,10 @@ use Laminas\EventManager\ListenerAggregateTrait;
 use Laminas\Http\Response;
 use Laminas\Mvc\Controller\ControllerManager;
 use Laminas\Mvc\Injector\ControllerEvent;
+use Laminas\Mvc\Injector\Resolver\NonTypeArgumentResolverInterface;
 use Laminas\Mvc\Injector\Resolver\ResolverCollection;
 use ReflectionClass;
+use ReflectionException;
 
 use function call_user_func;
 
@@ -26,6 +28,10 @@ final class ArgumentResolverListener implements ListenerAggregateInterface
     ) {
     }
 
+    /**
+     * @throws ReflectionException
+     * @throws Exception
+     */
     private function onArgumentResolverEvent(ControllerEvent $event): Response
     {
         $routeMatch = $event->getRouteMatch();
@@ -39,10 +45,12 @@ final class ArgumentResolverListener implements ListenerAggregateInterface
         $arguments = [];
         foreach ($method->getParameters() as $parameter) {
             foreach ($this->argumentResolver->getResolvers() as $resolver) {
-                if ($resolver->supports($parameter)) {
-                    $arguments[$parameter->getPosition()] = $resolver->resolve($parameter, $event);
+                if ($parameter->hasType() || $resolver instanceof NonTypeArgumentResolverInterface) {
+                    if ($resolver->supports($parameter)) {
+                        $arguments[$parameter->getPosition()] = $resolver->resolve($parameter, $event);
 
-                    continue 2;
+                        continue 2;
+                    }
                 }
             }
 
