@@ -10,8 +10,7 @@
   ],
   "require": {
     "php": "~8.1.0 || ~8.2.0 || ~8.3.0",
-    "laminas/laminas-modulemanager": "*",
-    "symfony/http-kernel": "*"
+    "laminas/laminas-modulemanager": "^2.15"
   },
   "require-dev": {
     "nubox/laminas-router-attributes": "*",

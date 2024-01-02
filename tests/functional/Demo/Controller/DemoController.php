@@ -7,7 +7,7 @@ namespace Laminas\Mvc\Injector\Functional\Test\Demo\Controller;
 use Laminas\Http\Request;
 use Laminas\Http\Response;
 use Laminas\Mvc\Injector\Controller\AbstractInjectorController;
-use Laminas\View\View;
+use Laminas\Mvc\Injector\Functional\Test\Demo\Service\DemoService;
 use Symfony\Component\Routing\Attribute\Route;
 
 final class DemoController extends AbstractInjectorController
@@ -66,8 +66,11 @@ final class DemoController extends AbstractInjectorController
         return $response;
     }
 
+    /**
+     * @param mixed $var
+     */
     #[Route(path: 'no-typehint/{var}', name: 'typehint-route')]
-    public function noTypeHintParamter(Request $request, $var): Response
+    public function noTypeHintParameter(Request $request, $var): Response
     {
         $response = new Response();
         $response->setContent($request->getUri()->getPath() . ' - ' . $var);
@@ -76,10 +79,10 @@ final class DemoController extends AbstractInjectorController
     }
 
     #[Route(path: 'service-test', name: 'service-route')]
-    public function serviceParameter(View $view): Response
+    public function serviceParameter(DemoService $demoService): Response
     {
         $response = new Response();
-        $response->setContent($view->getResponse());
+        $response->setContent($demoService->getValue());
 
         return $response;
     }

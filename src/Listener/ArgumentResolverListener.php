@@ -11,6 +11,7 @@ use Laminas\EventManager\ListenerAggregateTrait;
 use Laminas\Http\Response;
 use Laminas\Mvc\Controller\ControllerManager;
 use Laminas\Mvc\Injector\ControllerEvent;
+use Laminas\Mvc\Injector\Resolver\ResolverCollection;
 use ReflectionClass;
 
 use function call_user_func;
@@ -20,8 +21,8 @@ final class ArgumentResolverListener implements ListenerAggregateInterface
     use ListenerAggregateTrait;
 
     public function __construct(
-        private ControllerManager $controllerManager,
-        private array $argumentResolver
+        private readonly ControllerManager $controllerManager,
+        private readonly ResolverCollection $argumentResolver
     ) {
     }
 
@@ -37,8 +38,8 @@ final class ArgumentResolverListener implements ListenerAggregateInterface
 
         $arguments = [];
         foreach ($method->getParameters() as $parameter) {
-            foreach ($this->argumentResolver as $resolver) {
-                if ($resolver->supports($parameter, $event)) {
+            foreach ($this->argumentResolver->getResolvers() as $resolver) {
+                if ($resolver->supports($parameter)) {
                     $arguments[$parameter->getPosition()] = $resolver->resolve($parameter, $event);
 
                     continue 2;

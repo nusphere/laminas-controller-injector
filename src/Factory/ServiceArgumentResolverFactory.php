@@ -10,8 +10,14 @@ use Psr\Container\ContainerInterface;
 
 class ServiceArgumentResolverFactory implements FactoryInterface
 {
-    public function __invoke(ContainerInterface $container, $requestedName, ?array $options = null)
-    {
+    /**
+     * @param string $requestedName
+     */
+    public function __invoke(
+        ContainerInterface $container,
+        $requestedName,
+        ?array $options = null
+    ): ServiceArgumentResolver {
         return new ServiceArgumentResolver($container);
     }
 }

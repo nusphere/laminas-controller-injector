@@ -2,7 +2,11 @@
 
 ## Description
 
-This package provides a way to use controllers in a Laminas application without the need of naming a method with the "Action" prefix. It also passes route parameters into controller methods as arguments.
+The core feature of this “plugin” is the ability to set parameters for controller methods.
+Primarily to pass the value of a variable of a route directly to the method at the dispatch event as an argument. 
+The new `AbstractInjectorController` must be used for this usage.
+
+In addition, with the new dispatcher you can also do without the “Action” postfix for these methods.
 
 ## Requirements
 
@@ -55,14 +59,52 @@ to `myMethod()`.
 
 ## AbstractInjectorController
 
-The provided \Laminas\Mvc\Injector\Controller\AbstractInjectorController is required as Controller extension.
+The provided `\Laminas\Mvc\Injector\Controller\AbstractInjectorController` is required as Controller extension.
 It matches the given parameter values into the requested action. The same variable name is required.
 
-## Available ArgumentResolver
+As soon as the `AbstractInjectorController` is used, in addition to the route parameters, objects from the 
+`ServiceManager` are also injected into the corresponding controller method  - regardless of the route.
+This reduces the processes necessary to access a service from the ServiceManager.
 
+The respective request can also be injected as a complete request object.
+
+```php
+class MyController extends AbstractInjectorController
+{
+    public function serviceParameter(DemoService $demoService): Response
+    {
+        $response = new Response();
+        $response->setContent($demoService->getValue());
+
+        return $response;
+    }
+}
+```
+
+## Available ArgumentResolver -> (configurable `controller_argument_resolver`)
+
+Every argument of a controller method is analyzed and can be determined by the activated ArgumentResolver. 
+The following ArgumentResolvers are activated by default. However, additional ArgumentResolvers can also be added.
+
+#### Activated by default:
 * IntegerArgumentResolver - inject a `int`, parsed from Route parameters (`int` required)
 * StringArgumentResolver - inject a `string` , parsed from Route parameters (no typehint or `string` required)
 * RequestArgumentResolver - inject the responding `Request` object into the method (`Request` required)
+* ServiceArgumentResolver - inject an `object` from the container (ServiceManager) (explicit object Typehint required)
+
+```php
+return [
+    /**
+     * each resolver need to implement ArgumentResolverInterface:class
+     */
+    'controller_argument_resolver' => [
+        StringArgumentResolver::class,
+        IntegerArgumentResolver::class,
+        RequestArgumentResolver::class,
+        ServiceArgumentResolver::class,
+    ],
+];
+```
 
 ## Suggestion
 

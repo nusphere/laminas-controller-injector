@@ -68,6 +68,6 @@ final class DemoInjectionTest extends AbstractControllerTestCase
     {
         $this->dispatch('/service-test');
 
-        self::assertSame(null, $this->getResponse()->getContent());
+        self::assertSame(12, $this->getResponse()->getContent());
     }
 }
